@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "omasys.task-manager",
   "name": "OmaSys",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Rooke Poole",
   "description": "A native Omarchy task manager with live system usage, process search, sorting, and safe process controls.",
   "kinds": [

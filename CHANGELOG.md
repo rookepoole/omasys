@@ -2,6 +2,17 @@
 
 All notable changes to OmaSys are documented here.
 
+## 1.0.1 - 2026-08-27
+
+### Security
+
+- Force every plugin-owned QML `Text` sink to render plain text so process, filter, diagnostic, and host metadata cannot be interpreted as rich-text markup or initiate resource loads.
+- Replace the shell-provided confirmation dialog with a theme-compatible local dialog that preserves literal process names with plain-text rendering.
+
+### Tests
+
+- Add a regression check that requires `Text.PlainText` on every native QML `Text` sink and prevents reintroduction of the unsafe shared confirmation dialog.
+
 ## 1.0.0 - 2026-08-27
 
 ### Added

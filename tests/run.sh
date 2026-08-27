@@ -25,6 +25,9 @@ test -n "$process_output"
 printf 'Checking model helpers...\n'
 node "$repo_dir/tests/model.test.js"
 
+printf 'Checking QML text-sink safety...\n'
+node "$repo_dir/tests/qml-security.test.js"
+
 printf 'Checking process-action guardrails...\n'
 if "$repo_dir/scripts/process-action.sh" term 1 >/dev/null 2>&1; then
   printf 'process-action unexpectedly accepted PID 1\n' >&2

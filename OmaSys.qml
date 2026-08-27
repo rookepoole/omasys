@@ -507,7 +507,7 @@ Item {
           }
         }
 
-        ConfirmDialog {
+        SafeConfirmDialog {
           id: confirmDialog
           anchors.fill: parent
           opened: root.confirmOpen
@@ -547,6 +547,7 @@ Item {
             Text {
               id: headerTitle
               text: "OmaSys  /  Task Manager"
+              textFormat: Text.PlainText
               color: root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.display
@@ -555,6 +556,7 @@ Item {
 
             Text {
               text: (root.hostname || "This computer") + "  ·  " + root.distribution + "  ·  kernel " + root.kernel
+              textFormat: Text.PlainText
               color: Qt.darker(root.foreground, 1.45)
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
@@ -572,6 +574,7 @@ Item {
             Text {
               width: parent.width
               text: displayModel.count + " shown / " + root.allProcesses.length + " sampled"
+              textFormat: Text.PlainText
               color: root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.body
@@ -581,6 +584,7 @@ Item {
             Text {
               width: parent.width
               text: "Up " + Model.formatDuration(root.uptimeSeconds) + "  ·  F5 refresh  ·  Space pause"
+              textFormat: Text.PlainText
               color: Qt.darker(root.foreground, 1.45)
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
@@ -676,6 +680,7 @@ Item {
               anchors.leftMargin: Style.space(12)
               anchors.rightMargin: Style.space(12)
               text: root.filterText === "" ? "Type to search PID, user, command, or arguments..." : root.filterText
+              textFormat: Text.PlainText
               color: root.filterText === "" ? Qt.darker(root.foreground, 1.6) : root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.body
@@ -854,6 +859,7 @@ Item {
             text: root.filterText === ""
               ? "No processes returned\nCheck the collector output or refresh."
               : "No process matches “" + root.filterText + "”\nPress Escape to clear the search."
+            textFormat: Text.PlainText
             color: root.foreground
             font.family: root.fontFamily
             font.pixelSize: Style.font.body
@@ -887,6 +893,7 @@ Item {
               text: footer.process
                 ? footer.process.command + "  ·  PID " + footer.process.pid + "  ·  PPID " + footer.process.ppid + "  ·  nice " + footer.process.nice
                 : "Select a process"
+              textFormat: Text.PlainText
               color: root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.body
@@ -900,6 +907,7 @@ Item {
                 : (footer.process
                   ? ((root.currentUid >= 0 && footer.process.uid !== root.currentUid ? "Read-only system process  ·  " : "") + footer.process.arguments)
                   : "Process actions never request sudo and are limited to your own processes.")
+              textFormat: Text.PlainText
               color: root.actionMessage !== ""
                 ? (root.actionSucceeded ? root.accent : root.urgent)
                 : Qt.darker(root.foreground, 1.45)
@@ -952,6 +960,135 @@ Item {
     }
   }
 
+  component SafeConfirmDialog: Item {
+    id: dialog
+
+    property bool opened: false
+    property string message: ""
+    property string cancelText: "Cancel"
+    property string confirmText: "Confirm"
+    property int selectedIndex: 1
+    property color background: root.background
+    property color foreground: root.foreground
+    property color scrim: root.scrim
+    property color selectedBackground: root.selectedBackground
+    property color selectedText: root.selectedText
+    property string fontFamily: root.fontFamily
+    property int cornerRadius: Style.cornerRadius
+
+    signal canceled()
+    signal confirmed()
+
+    function handleKey(event) {
+      if (!dialog.opened) return false
+
+      if (event.key === Qt.Key_Escape) {
+        dialog.canceled()
+        return true
+      } else if (event.key === Qt.Key_Left || event.key === Qt.Key_Right || event.key === Qt.Key_Tab || event.key === Qt.Key_Backtab) {
+        dialog.selectedIndex = dialog.selectedIndex === 0 ? 1 : 0
+        return true
+      } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+        if (dialog.selectedIndex === 0) dialog.canceled()
+        else dialog.confirmed()
+        return true
+      }
+
+      return false
+    }
+
+    visible: opened
+
+    Rectangle {
+      anchors.fill: parent
+      color: dialog.scrim
+
+      MouseArea { anchors.fill: parent; onClicked: dialog.canceled() }
+
+      BorderSurface {
+        id: dialogCard
+        width: Math.min(parent.width - Style.space(32), Style.space(370))
+        height: dialogCard.contentTopInset + dialogCard.contentBottomInset + dialogMessage.implicitHeight + Style.space(20) + Style.space(34)
+        anchors.centerIn: parent
+        color: dialog.background
+        borderSpec: Border.flat(dialog.selectedText, Style.normalBorderWidth)
+        padding: Style.space(18)
+        radius: dialog.cornerRadius
+
+        MouseArea { anchors.fill: parent; onClicked: {} }
+
+        Item {
+          anchors.fill: parent
+          anchors.topMargin: dialogCard.contentTopInset
+          anchors.rightMargin: dialogCard.contentRightInset
+          anchors.bottomMargin: dialogCard.contentBottomInset
+          anchors.leftMargin: dialogCard.contentLeftInset
+
+          Text {
+            id: dialogMessage
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            text: dialog.message
+            textFormat: Text.PlainText
+            color: dialog.foreground
+            font.family: dialog.fontFamily
+            font.pixelSize: Style.font.title
+            wrapMode: Text.WordWrap
+          }
+
+          Row {
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            spacing: Style.space(10)
+
+            Repeater {
+              model: [dialog.cancelText, dialog.confirmText]
+
+              BorderSurface {
+                required property int index
+                required property string modelData
+
+                readonly property bool selected: dialog.selectedIndex === index
+                readonly property bool destructive: index === 1
+
+                width: Style.space(88)
+                height: Style.space(34)
+                color: selected
+                  ? (destructive ? Util.alpha(Color.urgent, 0.22) : dialog.selectedBackground)
+                  : "transparent"
+                borderSpec: Border.flat(destructive
+                  ? (selected ? Color.urgent : Util.alpha(Color.urgent, 0.56))
+                  : (selected ? dialog.selectedText : Util.alpha(dialog.foreground, 0.38)), Style.normalBorderWidth)
+                radius: 0
+
+                Text {
+                  anchors.centerIn: parent
+                  text: modelData
+                  textFormat: Text.PlainText
+                  color: destructive ? (selected ? Color.urgent : dialog.foreground) : (selected ? dialog.selectedText : dialog.foreground)
+                  font.family: dialog.fontFamily
+                  font.pixelSize: Style.font.caption
+                }
+
+                MouseArea {
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+                  onEntered: dialog.selectedIndex = index
+                  onClicked: {
+                    if (index === 0) dialog.canceled()
+                    else dialog.confirmed()
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   component MetricCard: BorderSurface {
     id: metric
     property string label: ""
@@ -973,6 +1110,7 @@ Item {
       Text {
         width: parent.width
         text: metric.label
+        textFormat: Text.PlainText
         color: Qt.darker(root.foreground, 1.45)
         font.family: root.fontFamily
         font.pixelSize: Style.font.caption
@@ -982,6 +1120,7 @@ Item {
       Text {
         width: parent.width
         text: metric.value
+        textFormat: Text.PlainText
         color: metric.critical ? root.urgent : root.foreground
         font.family: root.fontFamily
         font.pixelSize: metric.label === "NETWORK" ? Style.font.subtitle : Style.font.heading
@@ -991,6 +1130,7 @@ Item {
       Text {
         width: parent.width
         text: metric.detail
+        textFormat: Text.PlainText
         color: Qt.darker(root.foreground, 1.45)
         font.family: root.fontFamily
         font.pixelSize: Style.font.caption
@@ -1023,6 +1163,7 @@ Item {
       anchors.leftMargin: Style.space(6)
       anchors.rightMargin: Style.space(6)
       text: parent.text
+      textFormat: Text.PlainText
       color: Qt.darker(root.foreground, 1.35)
       font.family: root.fontFamily
       font.pixelSize: Style.font.caption
@@ -1045,6 +1186,7 @@ Item {
       anchors.leftMargin: Style.space(6)
       anchors.rightMargin: Style.space(6)
       text: parent.text
+      textFormat: Text.PlainText
       color: parent.hot ? root.urgent : (parent.selected ? root.selectedText : root.foreground)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
