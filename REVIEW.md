@@ -1,4 +1,4 @@
-# OmaSys pre-publication review brief
+# OmaSys 1.0.0 release verification
 
 ## Release candidate
 
@@ -7,7 +7,8 @@
 - Plugin ID: `omasys.task-manager`
 - Kinds: `overlay`, `bar-widget`
 - Marketplace category: System
-- State: review only; not published or submitted
+- Repository: `https://github.com/rookepoole/omasys`
+- State: release candidate tested on Omarchy Quattro
 
 ## Architecture
 
@@ -41,7 +42,7 @@ Process actions pass a fixed allowlisted action and numeric PID as separate argv
 - Some Intel GPU drivers expose no unprivileged standard utilization file, so GPU may correctly show `N/A` without an optional vendor tool.
 - Process CPU accumulation is reported by `ps` at one-second resolution, which can make very short samples look stepped.
 - PID reuse cannot be eliminated completely between selection and confirmation; the helper narrows risk by verifying existence and owner at action time.
-- The responsive layout is designed for a normal desktop display. A genuine running-session pass should verify unusually small or vertically oriented monitors before release.
+- The live visual pass covered a 1920×1080 display at scale 1. Unusually small, scaled, or vertically oriented monitors remain unverified hardware configurations.
 
 ## Automated evidence
 
@@ -52,12 +53,19 @@ Process actions pass a fixed allowlisted action and numeric PID as separate argv
 - System and process collectors run successfully on the review machine.
 - GPU collection reported a real AMD DRM utilization value on the review machine.
 - The action helper rejects PID 1 and unsupported actions and successfully terminates only a disposable same-UID test process.
+- Live TERM, KILL, STOP, and CONT paths passed against disposable same-UID processes; the force-end dialog also canceled safely by default.
+- Root-owned kernel workers remained visible but were rejected before the signal helper or confirmation path.
+- Live pause/resume, F5 refresh, filtering, backspace editing, empty-results feedback, search clearing, keyboard navigation, and Escape-to-close passed.
+- A sustained one-core workload reached 104.1% in the process table and the overlay stayed responsive while sorting by live CPU delta.
+- CPU, RAM, and GPU values rendered together in the bar and the full overlay; the test machine reported AMD DRM GPU usage.
+- The plugin was removed, reinstalled, enabled, moved back to its right-bar position, and loaded successfully through the supported Omarchy commands.
 - No symlink exists in the repository.
-- Qt's QML analyzer reports no OmaSys-specific unresolved type, property collision, or syntax error. Its remaining Quickshell metadata warnings reproduce on Omarchy's built-in clipboard overlay.
+- The running Quickshell log contained no OmaSys QML errors. The duplicate IPC-handler warnings in the log come from built-in and unrelated installed plugins.
 
-## Human decisions still required
+## Release notes
 
-- Final GitHub owner and public repository URL.
-- Whether the manifest author should remain `OmaSys Contributors` or use a personal/organization name.
-- Visual test and optional marketplace preview capture from an installed review session.
-- Final permission to create the public repository and submit the marketplace listing.
+- Author: Rooke Poole.
+- Public owner: `rookepoole`.
+- Marketplace category: `System`.
+- Marketplace tags: `Bar`, `Quickshell`, `System`.
+- A public screenshot is intentionally omitted because a genuine task-manager capture contains local host, user, process, and command-line data. The live UI was visually reviewed before release.

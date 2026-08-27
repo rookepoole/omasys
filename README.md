@@ -2,7 +2,7 @@
 
 OmaSys is a native task manager for the Omarchy Quattro shell. It adds a compact CPU, RAM, and GPU readout to the bar and opens a full system dashboard with live resource usage, searchable processes, sorting, and confirmed process controls.
 
-![Status: review](https://img.shields.io/badge/status-review-orange)
+![Release: 1.0.0](https://img.shields.io/badge/release-1.0.0-brightgreen)
 ![Omarchy: Quattro](https://img.shields.io/badge/Omarchy-Quattro-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
@@ -48,12 +48,12 @@ omarchy plugin validate .
 
 Validation is read-only. The test suite creates one temporary `sleep` process owned by the current user and ends that test process through the same helper used by the UI.
 
-## Install a reviewed local checkout
+## Install
 
-Use the repository path while reviewing a local checkout:
+Install the public release and enable its bar widget:
 
 ```bash
-omarchy plugin add "$PWD" --enable
+omarchy plugin add https://github.com/rookepoole/omasys.git --enable
 ```
 
 OmaSys declares `right` as its default bar section. Move it later if desired:
@@ -62,13 +62,16 @@ OmaSys declares `right` as its default bar section. Move it later if desired:
 omarchy bar move omasys.task-manager --section right
 ```
 
-After publication, installation will use the public repository URL:
+To review a local checkout before enabling it:
 
 ```bash
-omarchy plugin add https://github.com/OWNER/omasys.git --enable
+git clone https://github.com/rookepoole/omasys.git
+cd omasys
+omarchy plugin validate .
+./tests/run.sh
+omarchy plugin add "$PWD"
+omarchy plugin enable omasys.task-manager --section right
 ```
-
-`OWNER` intentionally remains a placeholder until the repository owner is chosen during the publication review.
 
 ## Open and control OmaSys
 
@@ -108,15 +111,9 @@ Removal deletes only the plugin checkout managed by Omarchy and its bar/config r
 
 OmaSys reads local kernel and process information only while its UI or bar widget is active. It does not transmit data, persist process lists, record command lines, or contact the network. See [SECURITY.md](SECURITY.md) for the detailed trust boundary.
 
-## Publishing status
+## Release and marketplace
 
-This repository is prepared for review and has not been submitted to the marketplace. Before publishing:
-
-1. Choose the public GitHub owner and repository URL.
-2. Confirm the author string in `manifest.json`.
-3. Run the validation and tests on a clean Omarchy Quattro session.
-4. Capture an honest preview from the running plugin, if desired.
-5. Complete [PUBLISH_CHECKLIST.md](PUBLISH_CHECKLIST.md).
+OmaSys 1.0.0 was validated, exercised in a live Omarchy Quattro session, and prepared for the `System` marketplace category with the `Bar`, `Quickshell`, and `System` tags. The detailed runtime evidence is in [REVIEW.md](REVIEW.md), and the publication record is in [PUBLISH_CHECKLIST.md](PUBLISH_CHECKLIST.md).
 
 The marketplace publishing guide requires a public GitHub repository, a valid root manifest, README, license, and safe installation/removal. See the [Omarchy Plugins publishing guide](https://omarchyplugins.com/publish.html) and the [official Omarchy shell plugin reference](https://github.com/basecamp/omarchy/blob/quattro/shell/README.md).
 

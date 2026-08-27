@@ -3,7 +3,7 @@
   "id": "omasys.task-manager",
   "name": "OmaSys",
   "version": "1.0.0",
-  "author": "OmaSys Contributors",
+  "author": "Rooke Poole",
   "description": "A native Omarchy task manager with live system usage, process search, sorting, and safe process controls.",
   "kinds": [
     "overlay",
