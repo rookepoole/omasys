@@ -845,33 +845,20 @@ Item {
             }
           }
 
-          Item {
-            visible: displayModel.count === 0
-            anchors.fill: parent
+          Text {
+            anchors.centerIn: parent
+            width: parent.width
             z: 1
-
-            Column {
-              anchors.centerIn: parent
-              width: parent.width
-              spacing: Style.space(8)
-
-              Text {
-                width: parent.width
-                text: root.filterText === "" ? "No processes returned" : "No process matches “" + root.filterText + "”"
-                color: root.foreground
-                font.family: root.fontFamily
-                font.pixelSize: Style.font.title
-                horizontalAlignment: Text.AlignHCenter
-              }
-              Text {
-                width: parent.width
-                text: root.filterText === "" ? "Check the collector output or refresh." : "Press Escape to clear the search."
-                color: Qt.darker(root.foreground, 1.45)
-                font.family: root.fontFamily
-                font.pixelSize: Style.font.caption
-                horizontalAlignment: Text.AlignHCenter
-              }
-            }
+            text: displayModel.count === 0
+              ? (root.filterText === ""
+                  ? "No processes returned\nCheck the collector output or refresh."
+                  : "No process matches “" + root.filterText + "”\nPress Escape to clear the search.")
+              : ""
+            color: root.foreground
+            font.family: root.fontFamily
+            font.pixelSize: Style.font.body
+            lineHeight: 1.6
+            horizontalAlignment: Text.AlignHCenter
           }
         }
 
