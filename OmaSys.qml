@@ -848,7 +848,8 @@ Item {
           Text {
             anchors.centerIn: parent
             width: parent.width
-            z: 1
+            height: Style.space(80)
+            z: 100
             text: displayModel.count === 0
               ? (root.filterText === ""
                   ? "No processes returned\nCheck the collector output or refresh."
@@ -859,6 +860,7 @@ Item {
             font.pixelSize: Style.font.body
             lineHeight: 1.6
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
           }
         }
 
