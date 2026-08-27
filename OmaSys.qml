@@ -777,27 +777,10 @@ Item {
             id: processList
             anchors.fill: parent
             model: displayModel
+            visible: displayModel.count > 0
             clip: true
             spacing: Style.space(2)
             boundsBehavior: Flickable.StopAtBounds
-
-            footer: Item {
-              width: processList.width
-              height: processList.count === 0 ? processList.height : 0
-
-              Text {
-                anchors.centerIn: parent
-                width: parent.width
-                text: root.filterText === ""
-                  ? "No processes returned\nCheck the collector output or refresh."
-                  : "No process matches “" + root.filterText + "”\nPress Escape to clear the search."
-                color: root.foreground
-                font.family: root.fontFamily
-                font.pixelSize: Style.font.body
-                lineHeight: 1.6
-                horizontalAlignment: Text.AlignHCenter
-              }
-            }
 
             delegate: Rectangle {
               id: processRow
@@ -861,6 +844,20 @@ Item {
                 }
               }
             }
+          }
+
+          Text {
+            visible: displayModel.count === 0
+            anchors.centerIn: parent
+            width: parent.width
+            text: root.filterText === ""
+              ? "No processes returned\nCheck the collector output or refresh."
+              : "No process matches “" + root.filterText + "”\nPress Escape to clear the search."
+            color: root.foreground
+            font.family: root.fontFamily
+            font.pixelSize: Style.font.body
+            lineHeight: 1.6
+            horizontalAlignment: Text.AlignHCenter
           }
 
         }
