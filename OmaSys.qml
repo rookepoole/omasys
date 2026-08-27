@@ -781,6 +781,24 @@ Item {
             spacing: Style.space(2)
             boundsBehavior: Flickable.StopAtBounds
 
+            footer: Item {
+              width: processList.width
+              height: processList.count === 0 ? processList.height : 0
+
+              Text {
+                anchors.centerIn: parent
+                width: parent.width
+                text: root.filterText === ""
+                  ? "No processes returned\nCheck the collector output or refresh."
+                  : "No process matches “" + root.filterText + "”\nPress Escape to clear the search."
+                color: root.foreground
+                font.family: root.fontFamily
+                font.pixelSize: Style.font.body
+                lineHeight: 1.6
+                horizontalAlignment: Text.AlignHCenter
+              }
+            }
+
             delegate: Rectangle {
               id: processRow
               required property int index
@@ -845,23 +863,6 @@ Item {
             }
           }
 
-          Text {
-            anchors.centerIn: parent
-            width: parent.width
-            height: Style.space(80)
-            z: 100
-            text: displayModel.count === 0
-              ? (root.filterText === ""
-                  ? "No processes returned\nCheck the collector output or refresh."
-                  : "No process matches “" + root.filterText + "”\nPress Escape to clear the search.")
-              : ""
-            color: root.foreground
-            font.family: root.fontFamily
-            font.pixelSize: Style.font.body
-            lineHeight: 1.6
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-          }
         }
 
         BorderSurface {
