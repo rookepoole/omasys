@@ -850,6 +850,7 @@ Item {
             visible: displayModel.count < 1
             anchors.centerIn: parent
             width: parent.width
+            height: Style.space(80)
             text: root.filterText === ""
               ? "No processes returned\nCheck the collector output or refresh."
               : "No process matches “" + root.filterText + "”\nPress Escape to clear the search."
@@ -858,6 +859,7 @@ Item {
             font.pixelSize: Style.font.body
             lineHeight: 1.6
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
           }
 
         }
