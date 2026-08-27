@@ -845,28 +845,32 @@ Item {
             }
           }
 
-          Column {
+          Item {
             visible: displayModel.count === 0
-            anchors.centerIn: parent
-            width: parent.width
+            anchors.fill: parent
             z: 1
-            spacing: Style.space(8)
 
-            Text {
+            Column {
+              anchors.centerIn: parent
               width: parent.width
-              text: root.filterText === "" ? "No processes returned" : "No process matches “" + root.filterText + "”"
-              color: root.foreground
-              font.family: root.fontFamily
-              font.pixelSize: Style.font.title
-              horizontalAlignment: Text.AlignHCenter
-            }
-            Text {
-              width: parent.width
-              text: root.filterText === "" ? "Check the collector output or refresh." : "Press Escape to clear the search."
-              color: Qt.darker(root.foreground, 1.45)
-              font.family: root.fontFamily
-              font.pixelSize: Style.font.caption
-              horizontalAlignment: Text.AlignHCenter
+              spacing: Style.space(8)
+
+              Text {
+                width: parent.width
+                text: root.filterText === "" ? "No processes returned" : "No process matches “" + root.filterText + "”"
+                color: root.foreground
+                font.family: root.fontFamily
+                font.pixelSize: Style.font.title
+                horizontalAlignment: Text.AlignHCenter
+              }
+              Text {
+                width: parent.width
+                text: root.filterText === "" ? "Check the collector output or refresh." : "Press Escape to clear the search."
+                color: Qt.darker(root.foreground, 1.45)
+                font.family: root.fontFamily
+                font.pixelSize: Style.font.caption
+                horizontalAlignment: Text.AlignHCenter
+              }
             }
           }
         }
