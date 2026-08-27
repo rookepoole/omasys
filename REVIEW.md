@@ -70,3 +70,9 @@ Process actions pass a fixed allowlisted action and numeric PID as separate argv
 - Marketplace category: `System`.
 - Marketplace tags: `Bar`, `Quickshell`, `System`.
 - A public screenshot is intentionally omitted because a genuine task-manager capture contains local host, user, process, and command-line data. The live UI was visually reviewed before release.
+
+## Marketplace automation
+
+- Repository reachability, root README/license detection, manifest uniqueness, and Quattro compatibility passed at release commit `0d6cd59` (`v1.0.0`).
+- The automated result is **Ready for listing review**.
+- Manual security review was requested because OmaSys documents a remote install path and explicitly discusses its no-elevation process-control boundary. The marketplace notice states that no change is necessarily required.

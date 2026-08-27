@@ -41,5 +41,5 @@ This checklist mirrors the current [Omarchy Plugins publishing guide](https://om
 
 - [x] Open and submit the official issue form: [marketplace issue #2697](https://github.com/HANCORE-linux/omarchy-plugin-marketplace/issues/2697).
 - [x] Provide the canonical public repository URL, category (`System`), and tags (`Bar`, `Quickshell`, `System`).
-- [ ] Confirm automated validation is running against the intended current commit.
+- [x] Confirm automated validation passed against release commit `0d6cd59` (`v1.0.0`) and marked the submission ready for listing review.
 - [x] Review the final listing text before maintainer approval; no preview asset was submitted.
