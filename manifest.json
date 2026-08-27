@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "omasys.task-manager",
+  "name": "OmaSys",
+  "version": "1.0.0",
+  "author": "OmaSys Contributors",
+  "description": "A native Omarchy task manager with live system usage, process search, sorting, and safe process controls.",
+  "kinds": [
+    "overlay",
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "overlay": "OmaSys.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "OmaSys",
+    "description": "Live CPU, memory, and GPU usage with one-click task manager access",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
