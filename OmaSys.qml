@@ -848,6 +848,8 @@ Item {
           Column {
             visible: displayModel.count === 0
             anchors.centerIn: parent
+            width: parent.width
+            z: 1
             spacing: Style.space(8)
 
             Text {
