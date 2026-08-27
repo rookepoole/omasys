@@ -860,7 +860,6 @@ Item {
             lineHeight: 1.6
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            onVisibleChanged: console.log("omasys empty-state", visible, displayModel.count, width, height, text)
           }
 
         }
