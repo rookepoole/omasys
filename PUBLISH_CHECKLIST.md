@@ -6,7 +6,7 @@ This checklist mirrors the current [Omarchy Plugins publishing guide](https://om
 
 - [x] Choose the final GitHub owner (`rookepoole`) and permanent namespace (`omasys.task-manager`).
 - [x] Set the manifest author to Rooke Poole.
-- [ ] Create a public GitHub repository with `manifest.json` at its root.
+- [x] Create the public `rookepoole/omasys` GitHub repository with `manifest.json` at its root.
 - [x] Confirm all release files are committed and no symlinks exist.
 - [x] Confirm executable bits are preserved on `scripts/*.sh` and `tests/run.sh`.
 
@@ -28,7 +28,7 @@ This checklist mirrors the current [Omarchy Plugins publishing guide](https://om
 
 - [x] Run `omarchy plugin validate .` on the release tree.
 - [x] Run `./tests/run.sh` on the release tree.
-- [ ] Install the final repository URL without `--enable`, review the staged checkout, then enable it.
+- [x] Install the final repository URL without `--enable`, review and test the staged checkout, then enable it.
 - [x] Verify CPU, RAM, and real AMD DRM GPU values in the bar and overlay; vendor-independent and NVIDIA parsing are covered by model tests.
 - [x] Verify `GPU N/A` is graceful through collector/model tests when no utilization interface is available.
 - [x] Verify filtering, sorting, pause/resume, refresh, empty-state feedback, and keyboard navigation.
@@ -39,7 +39,7 @@ This checklist mirrors the current [Omarchy Plugins publishing guide](https://om
 
 ## Marketplace submission
 
-- [ ] Open the official submission issue form.
-- [ ] Provide the public repository URL, category (`System`), and tags (`Bar`, `Quickshell`, `System`).
+- [x] Open and submit the official issue form: [marketplace issue #2697](https://github.com/HANCORE-linux/omarchy-plugin-marketplace/issues/2697).
+- [x] Provide the canonical public repository URL, category (`System`), and tags (`Bar`, `Quickshell`, `System`).
 - [ ] Confirm automated validation is running against the intended current commit.
-- [ ] Review the final listing text and optional preview before maintainer approval.
+- [x] Review the final listing text before maintainer approval; no preview asset was submitted.

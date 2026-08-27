@@ -113,7 +113,7 @@ OmaSys reads local kernel and process information only while its UI or bar widge
 
 ## Release and marketplace
 
-OmaSys 1.0.0 was validated, exercised in a live Omarchy Quattro session, and prepared for the `System` marketplace category with the `Bar`, `Quickshell`, and `System` tags. The detailed runtime evidence is in [REVIEW.md](REVIEW.md), and the publication record is in [PUBLISH_CHECKLIST.md](PUBLISH_CHECKLIST.md).
+OmaSys 1.0.0 was validated, exercised in a live Omarchy Quattro session, and [submitted to the Omarchy plugin marketplace](https://github.com/HANCORE-linux/omarchy-plugin-marketplace/issues/2697) in the `System` category with the `Bar`, `Quickshell`, and `System` tags. The detailed runtime evidence is in [REVIEW.md](REVIEW.md), and the publication record is in [PUBLISH_CHECKLIST.md](PUBLISH_CHECKLIST.md).
 
 The marketplace publishing guide requires a public GitHub repository, a valid root manifest, README, license, and safe installation/removal. See the [Omarchy Plugins publishing guide](https://omarchyplugins.com/publish.html) and the [official Omarchy shell plugin reference](https://github.com/basecamp/omarchy/blob/quattro/shell/README.md).
 

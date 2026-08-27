@@ -8,7 +8,8 @@
 - Kinds: `overlay`, `bar-widget`
 - Marketplace category: System
 - Repository: `https://github.com/rookepoole/omasys`
-- State: release candidate tested on Omarchy Quattro
+- State: released and submitted for marketplace review
+- Marketplace submission: `https://github.com/HANCORE-linux/omarchy-plugin-marketplace/issues/2697`
 
 ## Architecture
 
