@@ -847,7 +847,7 @@ Item {
           }
 
           Text {
-            visible: displayModel.count === 0
+            visible: displayModel.count < 1
             anchors.centerIn: parent
             width: parent.width
             text: root.filterText === ""
