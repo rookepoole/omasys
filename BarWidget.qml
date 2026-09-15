@@ -17,9 +17,13 @@ BarWidget {
   readonly property var installedManifest: bar && bar.shell && bar.shell.pluginRegistry
     ? bar.shell.pluginRegistry.installedPlugins[root.moduleName]
     : null
-  readonly property string pluginDir: installedManifest && installedManifest.__sourceDir
-    ? String(installedManifest.__sourceDir)
-    : ""
+  // omarchy-shell 4.0.3 stopped handing third-party plugins the registry's
+  // __sourceDir. This file knows where it lives, so ask Qt instead; the
+  // registry stays as a fallback for shells that still provide it.
+  readonly property string resolvedDir: Qt.resolvedUrl(".").toString().replace(/^file:\/\//, "").replace(/\/$/, "")
+  readonly property string pluginDir: resolvedDir !== ""
+    ? resolvedDir
+    : (installedManifest && installedManifest.__sourceDir ? String(installedManifest.__sourceDir) : "")
   readonly property string displayText: vertical
     ? "C " + Math.round(cpuPercent) + "%\nR " + Math.round(memoryPercent) + "%\nG "
       + (gpuPercent >= 0 ? Math.round(gpuPercent) + "%" : "--")

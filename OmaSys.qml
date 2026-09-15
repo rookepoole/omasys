@@ -63,7 +63,11 @@ Item {
   property var previousProcessCpu: null
 
   readonly property string pluginId: manifest && manifest.id ? String(manifest.id) : "omasys.task-manager"
-  readonly property string pluginDir: manifest && manifest.__sourceDir ? String(manifest.__sourceDir) : ""
+  // See BarWidget.qml: 4.0.3 no longer provides __sourceDir to third-party
+  // plugins, so resolve relative to this file and keep the registry as fallback.
+  readonly property string resolvedDir: Qt.resolvedUrl(".").toString().replace(/^file:\/\//, "").replace(/\/$/, "")
+  readonly property string pluginDir: resolvedDir !== "" ? resolvedDir
+    : (manifest && manifest.__sourceDir ? String(manifest.__sourceDir) : "")
 
   readonly property color background: Color.menu.background
   readonly property color foreground: Color.menu.text
