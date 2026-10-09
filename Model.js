@@ -226,3 +226,15 @@ function stateLabel(state) {
   if (code === "X" || code === "x") return "Dead"
   return state || "Unknown"
 }
+
+// Third-party manifests reach plugins without __sourceDir, so derive the plugin
+// folder from the QML file's own URL, falling back to the standard install path.
+function pluginDirFrom(baseUrl, home, pluginId) {
+  var url = String(baseUrl || "")
+  if (url.indexOf("file://") === 0) {
+    var path = decodeURIComponent(url.slice(7)).replace(/\/+$/, "")
+    if (path) return path
+  }
+  if (!home || !pluginId) return ""
+  return String(home).replace(/\/+$/, "") + "/.config/omarchy/plugins/" + pluginId
+}

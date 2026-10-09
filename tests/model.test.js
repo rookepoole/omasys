@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const source = fs.readFileSync(path.join(__dirname, "..", "Model.js"), "utf8");
-const context = { Date, isFinite, Math, Number, String, Array, Object };
+const context = { Date, isFinite, Math, Number, String, Array, Object, decodeURIComponent };
 vm.createContext(context);
 vm.runInContext(source, context, { filename: "Model.js" });
 
@@ -64,5 +64,9 @@ assert.equal(filtered[0].pid, 7);
 assert.equal(context.formatBytes(1024), "1.00 KiB");
 assert.equal(context.formatDuration(90061), "1d 1h");
 assert.equal(context.stateLabel("T+"), "Stopped");
+
+assert.equal(context.pluginDirFrom("file:///home/me/my%20plugins/omasys/", "/home/me", "omasys.task-manager"), "/home/me/my plugins/omasys");
+assert.equal(context.pluginDirFrom("qs:@/plugins/omasys/", "/home/me/", "omasys.task-manager"), "/home/me/.config/omarchy/plugins/omasys.task-manager");
+assert.equal(context.pluginDirFrom("", "", "omasys.task-manager"), "");
 
 process.stdout.write("Model tests passed\n");

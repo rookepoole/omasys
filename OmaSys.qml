@@ -63,7 +63,7 @@ Item {
   property var previousProcessCpu: null
 
   readonly property string pluginId: manifest && manifest.id ? String(manifest.id) : "omasys.task-manager"
-  readonly property string pluginDir: manifest && manifest.__sourceDir ? String(manifest.__sourceDir) : ""
+  readonly property string pluginDir: Model.pluginDirFrom(Qt.resolvedUrl("."), Quickshell.env("HOME"), pluginId)
 
   readonly property color background: Color.menu.background
   readonly property color foreground: Color.menu.text

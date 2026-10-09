@@ -14,12 +14,7 @@ BarWidget {
   property real gpuPercent: -1
   property var previousCpu: null
 
-  readonly property var installedManifest: bar && bar.shell && bar.shell.pluginRegistry
-    ? bar.shell.pluginRegistry.installedPlugins[root.moduleName]
-    : null
-  readonly property string pluginDir: installedManifest && installedManifest.__sourceDir
-    ? String(installedManifest.__sourceDir)
-    : ""
+  readonly property string pluginDir: Model.pluginDirFrom(Qt.resolvedUrl("."), Quickshell.env("HOME"), root.moduleName)
   readonly property string displayText: vertical
     ? "C " + Math.round(cpuPercent) + "%\nR " + Math.round(memoryPercent) + "%\nG "
       + (gpuPercent >= 0 ? Math.round(gpuPercent) + "%" : "--")
